@@ -1,7 +1,16 @@
 service: drone-api
 
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
 custom:
   tableName: 'users-table-${self:provider.stage}'
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
 
 provider:
   name: aws
