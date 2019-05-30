@@ -10,7 +10,13 @@
 # dependencies
 /node_modules
 .dynamodb
-.serverless
+.serverless/
+
+# environment
+.env
+
+# tests
+coverage/
 
 # profiling files
 chrome-profiler-events.json

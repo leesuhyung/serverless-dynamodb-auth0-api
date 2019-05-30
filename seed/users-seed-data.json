@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "shlee",
+    "tier": "triple",
+    "phones": "010-8765-4321",
+    "addresses": [
+      {
+        "addr": "seoul",
+        "zip": "12345"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "misong",
+    "tier": "major",
+    "phones": "010-1234-5678",
+    "addresses": [
+      {
+        "addr": "pusan",
+        "zip": "54321"
+      }
+    ]
+  }
+]
