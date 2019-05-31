@@ -1,16 +1,25 @@
 service: drone-api
 
 plugins:
-  - serverless-dynamodb-local
+  - serverless-dynamodb-local # https://www.npmjs.com/package/serverless-dynamodb-local
   - serverless-offline
 
-#custom:
-#  tableName: 'users-table-${self:provider.stage}'
-#  dynamodb:
-#    start:
-#      port: 8000
-#      inMemory: true
-#      migrate: true
+custom:
+  tableName:
+    users: 'users'
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      users:
+        sources:
+          - table: ${self:custom.tableName.users}
+            sources: [./seed/users-seed-data.json]
 
 provider:
   name: aws
@@ -34,20 +43,20 @@ provider:
 functions:
   - '${file(src/handlers/users/users.serverless.yml)}'
 
-#resources:
-#  Resources:
-#    UsersDynamoDBTable:
-#      Type: 'AWS::DynamoDB::Table'
-#      Properties:
-#        AttributeDefinitions:
-#          -
-#            AttributeName: userId
-#            AttributeType: S
-#        KeySchema:
-#          -
-#            AttributeName: userId
-#            KeyType: HASH
-#        ProvisionedThroughput:
-#          ReadCapacityUnits: 1
-#          WriteCapacityUnits: 1
-#        TableName: ${self:custom.tableName}
+resources:
+  Resources:
+    usersTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:custom.tableName.users}
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
