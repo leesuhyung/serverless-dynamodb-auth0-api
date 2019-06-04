@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy prod": "sls deploy --aws-profile drone-api --stage prod",
+    "deploy": "sls deploy --aws-profile drone-api",
+    "package": "sls package"
   },
   "keywords": [],
   "author": "",
@@ -12,11 +14,11 @@
   "dependencies": {
     "aws-sdk": "^2.463.0",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "serverless-http": "^2.0.2"
   },
   "devDependencies": {
-    "dotenv": "^8.0.0",
     "jest": "^24.8.0",
     "serverless-dynamodb-local": "^0.2.37",
     "serverless-offline": "^4.10.6"

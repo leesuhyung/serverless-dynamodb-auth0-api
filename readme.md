@@ -1,11 +1,17 @@
-## setup
+## build a restful api using serverless framework
+#### with AWS lambda, AWS api gateway, AWS dynamoDB
 
+## setup
 ```bash
 npm i
 ```
 
 ```bash
 sls dynamodb install
+```
+
+```bash
+cp .env.dist .env
 ```
 
 ## usage
@@ -16,6 +22,7 @@ sls info
 ```
 
 ```bash
+# http://localhost:3000
 sls offline start
 ```
 
@@ -27,6 +34,12 @@ sls config credentials --provider aws --key AKIAIOSFODNN7EXAMPLE --secret wJalrX
 ```
 
 ```bash
-# option: --aws-profile {profileName}
-sls deploy
+# dev
+npm run deploy
+
+# prod
+npm run deploy prod
 ```
+
+## dynamo db
+view `serverless.yaml`, `db.js`
