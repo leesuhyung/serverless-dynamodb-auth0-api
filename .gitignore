@@ -15,6 +15,7 @@
 # environment
 .env
 secrets.json
+*.pem
 
 # tests
 coverage/

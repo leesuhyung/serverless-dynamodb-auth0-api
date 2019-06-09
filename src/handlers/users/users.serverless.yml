@@ -1,7 +1,11 @@
 userList:
   handler: src/handlers/users/list.handler
   events:
-    - http: get /users
+#    - http: get /users
+    - http:
+        path: /users
+        method: get
+        authorizer: auth
 
 userGet:
   handler: src/handlers/users/get.handler
