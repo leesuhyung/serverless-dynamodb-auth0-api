@@ -1,26 +1,16 @@
 [
   {
     "id": "1",
-    "name": "shlee",
-    "tier": "triple",
-    "phones": "010-8765-4321",
-    "addresses": [
-      {
-        "addr": "seoul",
-        "zip": "12345"
-      }
-    ]
+    "auth0Sub": "google-oauth2|101382596889675552341",
+    "name": "first name",
+    "tier": "major",
+    "tribe": "terran"
   },
   {
     "id": "2",
-    "name": "misong",
-    "tier": "major",
-    "phones": "010-1234-5678",
-    "addresses": [
-      {
-        "addr": "pusan",
-        "zip": "54321"
-      }
-    ]
+    "auth0Sub": "auth0|5cfa95c57f85520de73dba81",
+    "name": "second name",
+    "tier": "triple",
+    "tribe": "protoss"
   }
 ]

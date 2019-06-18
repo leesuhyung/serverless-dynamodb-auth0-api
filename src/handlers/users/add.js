@@ -1,17 +1,20 @@
 require('dotenv/config');
 
-const { UserRepository, withStatusCode, parseWith, withProcessEnv } = require('../_init_');
+const { UserRepository, withStatusCode, parseWith, withProcessEnv, uuidv1 } = require('../_init_');
 
 const docClient = withProcessEnv(process.env)();
 const repository = new UserRepository(docClient);
-const created = withStatusCode(201);
+const ok = withStatusCode(200, JSON.stringify);
 const parseJson = parseWith(JSON.parse);
 
-exports.handler = async (event) => {
+exports.handler = async (event, context, callback) => {
     const { body } = event;
-    const contact = parseJson(body);
+    let user = parseJson(body);
+    user = Object.assign(user, {id: uuidv1()});
 
-    await repository.put(contact);
-
-    return created();
+    try {
+        return ok(await repository.put(user));
+    } catch (e) {
+        return callback(null, { statusCode: e.statusCode, body: JSON.stringify(e) });
+    }
 };
