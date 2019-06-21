@@ -2,28 +2,37 @@ userList:
   handler: src/handlers/users/list.handler
   events:
     - http: get /users
-#    - http:
-#        path: /users
-#        method: get
-#        authorizer: auth
 
 userGet:
   handler: src/handlers/users/get.handler
   events:
     - http: get /users/{id}
 
+userQuery:
+  handler: src/handlers/users/query.handler
+  events:
+    - http: get /users/query
+
 userAdd:
   handler: src/handlers/users/add.handler
   events:
-    - http: post /users
+    - http:
+        path: /users
+        method: post
+        authorizer: auth
 
 userUpdate:
   handler: src/handlers/users/update.handler
   events:
-    - http: put /users/{id}
+    - http:
+        path: /users/{id}
+        method: put
+        authorizer: auth
 
 userDelete:
   handler: src/handlers/users/delete.handler
   events:
-    - http: delete /users/{id}
-  
+    - http:
+        path: /users/{id}
+        method: delete
+        authorizer: auth

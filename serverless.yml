@@ -31,38 +31,48 @@ resources:
       DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
-          -
-            AttributeName: id
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: auth0Sub
             AttributeType: S
         KeySchema:
-          -
-            AttributeName: id
+          - AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        GlobalSecondaryIndexes:
+          - IndexName: auth0Sub
+            KeySchema:
+              - AttributeName: auth0Sub
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 2
+              WriteCapacityUnits: 2
         TableName: ${self:provider.environment.USERS_TABLE}
     # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
-#    GatewayResponse:
-#      Type: 'AWS::ApiGateway::GatewayResponse'
-#      Properties:
-#        ResponseParameters:
-#          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-#          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-#        ResponseType: EXPIRED_TOKEN
-#        RestApiId:
-#          Ref: 'ApiGatewayRestApi'
-#        StatusCode: '401'
-#    AuthFailureGatewayResponse:
-#      Type: 'AWS::ApiGateway::GatewayResponse'
-#      Properties:
-#        ResponseParameters:
-#          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-#          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-#        ResponseType: UNAUTHORIZED
-#        RestApiId:
-#          Ref: 'ApiGatewayRestApi'
-#        StatusCode: '401'
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: EXPIRED_TOKEN
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
 
 # npm run package
 package:

@@ -23,6 +23,7 @@ sls info
 
 ```bash
 # http://localhost:3000
+# if 8000 port already in use - kill -9 $(lsof -i TCP:8000| grep LISTEN | awk '{print $2}')
 sls offline start
 ```
 

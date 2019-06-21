@@ -2,8 +2,31 @@ const jwt = require('jsonwebtoken');
 const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
 const AUTH0_CLIENT_PUBLIC_KEY = process.env.AUTH0_CLIENT_PUBLIC_KEY;
 
+// Policy helper function
+const generatePolicy = (principalId, effect, resource) => {
+    const authResponse = {
+        principalId: principalId
+    };
+
+    if (effect && resource) {
+        Object.assign(authResponse, {
+            policyDocument: {
+                Version: '2012-10-17',
+                Statement: [
+                    {
+                        Action: 'execute-api:Invoke',
+                        Effect: effect,
+                        Resource: resource
+                    }
+                ]
+            }
+        });
+    }
+
+    return authResponse;
+};
+
 exports.handler = async (event, context, callback) => {
-    console.log(event);
     if (!event.authorizationToken) {
         return callback('Unauthorized');
     }
@@ -21,17 +44,12 @@ exports.handler = async (event, context, callback) => {
     try {
         jwt.verify(tokenValue, AUTH0_CLIENT_PUBLIC_KEY, options, (verifyError, decoded) => {
             if (verifyError) {
-                console.log('verifyError', verifyError);
-                // 401 Unauthorized
-                console.log(`Token invalid. ${verifyError}`);
                 return callback('Unauthorized');
             }
             // is custom authorizer function
-            console.log('valid from customAuthorizer', decoded);
-            return callback(null);
+            return callback(null, generatePolicy(decoded.sub, 'Allow', event.methodArn));
         });
     } catch (err) {
-        console.log('catch error. Invalid token', err);
         return callback('Unauthorized');
     }
 };

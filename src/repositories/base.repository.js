@@ -22,10 +22,21 @@ class BaseRepository {
     }
 
     async get(id) {
-        const params = this._createParamObject({Key: {id}});
+        const params = this._createParamObject({Key: id});
         const response = await this._documentClient.get(params).promise();
 
         return response.Item;
+    }
+
+    async indexQuery(index, value) {
+        const params = this._createParamObject({
+            IndexName: index,
+            KeyConditionExpression : `${index} = :${index}`,
+            ExpressionAttributeValues: {}
+        });
+
+        params.ExpressionAttributeValues[':' + index] = value;
+        return await this._documentClient.query(params).promise();
     }
 
     async put(item) {
@@ -42,8 +53,6 @@ class BaseRepository {
             Key: {id},
             ReturnValues: "UPDATED_NEW"
         }), updateExpression);
-
-        console.log(params);
 
         return await this._documentClient.update(params).promise();
     }

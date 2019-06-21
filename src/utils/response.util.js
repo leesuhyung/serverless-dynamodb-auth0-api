@@ -7,6 +7,7 @@ const withStatusCode = (statusCode, formatter = null) => {
     const format = hasFormatter ? formatter : _ => _;
 
     return (data = null) => {
+        console.log('data', data);
         const response = {
             statusCode: statusCode
         };
