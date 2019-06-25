@@ -14,6 +14,16 @@ sls dynamodb install
 cp .env.dist .env
 ```
 
+```bash
+# set you are auth0 client id
+cp secrets.json.dist secrets.json
+```
+
+```bash
+# set you are auth0 client public_key.pem
+public_key.pem
+```
+
 ## usage
 scan endpoint
 ```bash
