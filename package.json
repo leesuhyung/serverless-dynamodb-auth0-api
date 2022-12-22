@@ -17,7 +17,7 @@
     "dotenv": "^8.0.0",
     "dynamodb-update-expression": "^0.1.21",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.11",
     "serverless-http": "^2.0.2",
     "uuid": "^3.3.2"
